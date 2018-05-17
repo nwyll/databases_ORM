@@ -1,0 +1,93 @@
+1. Remove duplicates in a query response
+EX: Get a distinct list of names from User table
+SQL:
+SELECT DISTINCT name
+FROM User;
+
+ORM'ish:  User.select(:name).distinct
+
+2. Filter records using inequalities, pattern matching, ranges, and boolean logic
+Ex: Finds all clients with 2 orders
+SQL:
+SELECT *
+FROM Client
+WHERE order_count = 2;
+
+ORM'ish: Client.where("order_count = '2'")
+
+Ex: Finds all clients with 2-4 orders
+SQL:
+SELECT *
+FROM Client
+WHERE order_count BETWEEN 2 AND 4;
+
+ORM'ish: Client.where(order_count: 2..4)
+
+Ex: Find clients with an inactive account
+SQL:
+SELECT *
+FROM Client
+WHERE active = false;
+
+ORM'ish: Client.where("active = false")
+
+Ex: Find clients with "Austin" in their name
+SQL:
+SELECT *
+FROM Client
+WHERE name LIKE '%Austin%'
+
+ORM'ish: Client.where("name like ?", "%#{Austin}%"
+
+3. Sort records in a particular order
+SQL:
+SELECT *
+FROM Movie
+ORDER BY title;
+
+ORM'ish:  Movie.order(:title)
+
+4. Limit the number of records returned
+SQL:
+SELECT *
+FROM Movie
+LIMIT 5;
+
+ORM'ish:  Movie.limit(5)
+
+5. Group records into sections
+SQL:
+SELECT ClientName, COUNT(OrderID) AS NumberOfOrders
+FROM Orders
+GROUP BY ClientName;
+
+ORM'ish: Order.select("ClientName, count(OrderID) AS NumberOfOrders").group("ClientName")
+
+6. Perform calculations using aggregate functions
+SQL:
+SELECT AVG(Price)
+FROM Products;
+
+Products.average("price")
+
+7. Join tables using cross join, inner join, and outer joins
+
+Inner Join:
+SELECT Book.title, Author.name
+FROM Book
+JOIN Author ON Book.author_id = Author.id;
+
+Book.joins("INNER JOIN Author ON author.id = book.author_id")
+
+Cross Join:
+SELECT * FROM Patron CROSS JOIN Book;
+
+Patron.joins("CROSS JOIN Book")
+
+Outer Join:
+SELECT Patrons.name, Transactions.book_title
+FROM Patrons
+LEFT JOIN Transactions ON Patrons.id = Transactions.patron_id
+ORDER BY Patrons.name;
+
+Patrons.left_outer_joins(:Transactions).select(:book_title)
