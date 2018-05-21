@@ -1,0 +1,63 @@
+1. What's a RubyGem and why would you use one?
+Ruby Gems are self contained Ruby programs or libraries that can be used in other programs and applications. Gems can be installed into other applications as dependencies and provide the application with some functionality without have to create that code yourself. There are gems for all sorts of common functionality you might need for your application. The main benefit of using a gem is that it saves you time since you don't have to create the code from scratch. Plus, popular gems have been tested and proven for you.
+
+2. What's the difference between lazy and eager loading?
+Lazy loading is performing tasks only when required or utilized, while eager loading performs all tasks. Lazy loading defers the initialization of an object until it is needed, where as eager loading would initialize the object on creation.
+
+3. What's the difference between the CREATE TABLE and INSERT INTO SQL statements?
+The CREATE TABLE statement creates a new table in the database where as INSERT INTO adds new records into a table.
+
+4. What's the difference between extend and include? When would you use one or the other?
+In regards to modules, INCLUDE is used to add instance methods to a class and EXTEND adds class methods. In the following example by including the Foo module into the Bar class you are adding foo as an instance method on Bar. But by extending Foo in the Baz module you are adding foo as a class method on Baz.
+
+module Foo
+  def foo
+    puts 'HI!'
+  end
+end
+
+class Bar
+  include Foo
+end
+
+class Baz
+  extend Foo
+end
+
+To call the instance method:
+Bar.new.foo # HI!
+Bar.foo # Will not work
+
+To call the class method:
+Baz.foo # HI!
+Baz.new.foo # Will not work
+
+
+***5. In persistence.rb, why do the save methods need to be instance (vs. class) methods?
+When you are saving new records to AddressBook you are saving
+
+
+***6. Given the Jar-Jar Binks example earlier, what is the final SQL query in persistence.rb's save! method?
+
+
+***7. AddressBook's entries instance variable no longer returns anything. We'll fix this in a later checkpoint. What changes will we need to make?
+
+8. Write a Ruby method that converts snake_case to CamelCase using regular expressions (you can test them on Rubular).
+
+def CamelCase(snake_case)
+   snake_case.split('_').map(&:capitalize).join
+end
+
+OR
+
+def CamelCase(snake_case)
+  snake_case.gsub(/(?:_|^)(\w)/){$1.upcase}
+end
+
+9. Add a select method which takes an attribute and value and searches for all records that match:
+def find_by(attribute, value)
+  row = connection.get_first_row <<-SQL
+    SELECT #{columns.join ","} FROM #{table}
+    WHERE #{attribute} = #{BlocRecord::Utility.sql_strings(value)};
+  SQL
+end
