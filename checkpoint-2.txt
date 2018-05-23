@@ -32,15 +32,16 @@ To call the class method:
 Baz.foo # HI!
 Baz.new.foo # Will not work
 
+5. In persistence.rb, why do the save methods need to be instance (vs. class) methods?
+You will use save on an instance of Entry (an entry in the address book) to save changes to entries in the address book. You will not call save on the class Entry like you would Entry.create to create a new entry into the address book.
 
-***5. In persistence.rb, why do the save methods need to be instance (vs. class) methods?
-When you are saving new records to AddressBook you are saving
+6. Given the Jar-Jar Binks example earlier, what is the final SQL query in persistence.rb's save! method?
+UPDATE character
+SET character_name = 'Jar-Jar', star_rating = 1
+WHERE id = 1;
 
-
-***6. Given the Jar-Jar Binks example earlier, what is the final SQL query in persistence.rb's save! method?
-
-
-***7. AddressBook's entries instance variable no longer returns anything. We'll fix this in a later checkpoint. What changes will we need to make?
+7. AddressBook's entries instance variable no longer returns anything. We'll fix this in a later checkpoint. What changes will we need to make?
+Since we removed the initialize method we will need to use BlocRecord::Base initialize method by calling super.
 
 8. Write a Ruby method that converts snake_case to CamelCase using regular expressions (you can test them on Rubular).
 
